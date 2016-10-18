@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>颜色渐变</title>
+    <style type="text/css">
+        *{
+            padding:0;
+            margin: 0;
+        }
+        #canvas{
+            border:solid 1px #666;
+            display: block;
+            margin:20px auto;
+            /*记得画布的宽和高要写在内联样式中*/
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" height="600" width="600">
+    该浏览器不支持canvas功能，请更新版本或移步到谷歌浏览器
+</canvas>
+<script type="text/javascript">
+    window.onload=function(){
+        /*
+         线性渐变 var lg= context.createLinearGradient(xStart,yStart,xEnd,yEnd)  //参数 渐变的开始和结束坐标
+         线性渐变颜色lg.addColorStop(offset,color)   //参数 设定的颜色离渐变结束点的偏移量(0~1)   颜色
+         * */
+        var canvas=document.getElementById("canvas");
+        var context=canvas.getContext("2d");
+        var lg=context.createLinearGradient(20,20,220,220);
+        lg.addColorStop(0,'rgb(255,255,0)');//偏移量为0 黄色
+        //黄色渐变到绿色
+        lg.addColorStop(0.4,"rgb(0,255,0)");//偏移量为0.4
+        //绿色渐变到蓝色
+        lg.addColorStop(1,"#00f");//偏移量为1
+
+        //可以把lg对象理解成GDI中线性brush
+
+        context.fillStyle=lg;
+        //再用这个brush来画正方形
+        context.fillRect(20,20,220,220);
+        context.fill();
+
+
+        //边框渐变
+        context.strokeStyle=lg;
+        context.strokeRect(20,20,200,200);
+        context.stroke();
+
+
+        /*
+         径向渐变（发散）var rg=context.createRadialGradient(xStart,yStart,radiusStart,xEnd,yEnd,radiusEnd)
+         径向渐变（发散）颜色rg.addColorStop(offset,color)
+
+         xStart:发散开始圆心x坐标
+         yStart:发散开始圆心y坐标
+         radiusStart:发散开始圆的半径
+         xEnd:发散结束圆心的x坐标
+         yEnd:发散结束圆心的y坐标
+         radiusEnd:发散结束圆的半径
+
+         * */
+        //   //同一个圆心画球型
+        var rg=context.createRadialGradient(300,300,10,300,300,80);
+        rg.addColorStop(0,'#f00');
+        rg.addColorStop(0.2,'#0f0');
+        rg.addColorStop(0.6,'#00F');
+        rg.addColorStop(1,'#f90');
+        context.beginPath();
+        context.fillStyle=rg;
+        context.arc(300,300,10,0,Math.PI*2,true);
+        context.arc(300,300,80,0,Math.PI*2,true);
+        context.closePath();
+        context.fill();
+
+       //不同圆心看径向渐变模型
+        var rg1=context.createRadialGradient(100,400,10,300,400,80);
+        rg1.addColorStop(0,'#f00');
+        rg1.addColorStop(0.2,'#0f0');
+        rg1.addColorStop(0.6,'#00F');
+        rg1.addColorStop(1,'#f90');
+        context.beginPath();
+        context.fillStyle=rg1;
+        context.fillRect(10,400,300,100);
+        context.fill();
+        context.closePath();
+
+
+
+
+
+
+
+
+    }
+</script>
+</body>
+</html>
