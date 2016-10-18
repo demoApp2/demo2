@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>五角星</title>
+    <style type="text/css">
+          #canvas{
+              display: block;
+              margin: 20px auto;
+              border: solid 1px #666;
+          }
+    </style>
+    <script type="text/javascript">
+        window.onload=function(){
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+            var x=100,y=100;
+            context.beginPath();
+//五角星边的长度为100px，x1、h2为五角星的底部点坐标偏差值，x2、h2为五角星上部点偏差值
+            var x1 = 100*Math.sin(Math.PI/10);
+            var h1 = 100*Math.cos(Math.PI/10);
+            var x2 = 50;
+            var h2 = 50*Math.tan(Math.PI/5);
+            context.lineTo(x+x1,y+h1);
+            context.lineTo(x-50,y+h2);
+            context.lineTo(x+50,y+h2);
+            context.lineTo(x-x1,y+h1);
+            context.lineTo(x-x1,y+h1);
+            context.lineTo(x,y);
+            context.closePath();
+            context.fillStyle = "#f99";
+            context.fill();
+            context.closePath();
+            //设置边框样式以及填充颜色
+            context.shadowOffsetX=5; //:阴影的横向位移量（默认值为0）
+            context.shadowOffsetY=5; //:阴影的纵向位移量（默认值为0）
+            context.shadowColor="#eee"; //:阴影的颜色
+            context.shadowBlur =10;//:阴影的模糊范围（值越大越模糊）
+            context.fill();
+
+        }
+    </script>
+</head>
+<body>
+<canvas id="canvas" height="600" width="600">
+    你的浏览器不支持canvas
+</canvas>
+
+</body>
+</html>
